@@ -113,7 +113,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 2rem;
+            gap: 3rem;
             transform: translateX(-100%);
             transition: transform 0.3s ease;
             z-index: 1000;
@@ -121,6 +121,25 @@
 
         .mobile-menu.active {
             transform: translateX(0);
+        }
+
+        .mobile-menu .mobile-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu .mobile-logo img {
+            height: 80px;
+            width: auto;
+            filter: brightness(0) saturate(100%);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu .mobile-logo:hover img {
+            filter: brightness(0) saturate(100%) opacity(70%);
         }
 
         .mobile-menu .nav-link {
@@ -184,6 +203,33 @@
             height: 100%;
             object-fit: cover;
             z-index: 1;
+        }
+
+        .video-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 3;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .video-controls:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: scale(1.1);
+        }
+
+        .video-controls .play-pause {
+            color: white;
+            font-size: 1.2rem;
+            pointer-events: none;
         }
 
         .hero-overlay {
@@ -662,6 +708,9 @@
         
         <!-- Mobile Menu -->
         <div class="mobile-menu">
+            <a href="#home" class="mobile-logo">
+                <img src="assets/images/logo.png" alt="JSHARPZ THE BARBER">
+            </a>
             <a href="#about" class="nav-link">About</a>
             <a href="#contact" class="nav-link">Contact</a>
         </div>
@@ -669,9 +718,12 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <video class="hero-video" autoplay muted loop>
+        <video id="heroVideo" class="hero-video" autoplay muted loop playsinline>
             <source src="assets/videos/WhatsApp Video 2025-05-22 at 15.53.01_1.mp4" type="video/mp4">
         </video>
+        <div class="video-controls" id="videoControls">
+            <span class="play-pause">⏸️</span>
+        </div>
     </section>
 
     <!-- About Section -->
@@ -776,6 +828,35 @@
     </section>
 
     <script>
+        // Video controls
+        const heroVideo = document.getElementById('heroVideo');
+        const videoControls = document.getElementById('videoControls');
+        const playPauseIcon = videoControls.querySelector('.play-pause');
+
+        // Force video to play on load
+        heroVideo.addEventListener('loadeddata', () => {
+            heroVideo.play().catch(e => {
+                console.log('Autoplay prevented:', e);
+            });
+        });
+
+        // Video control functionality
+        videoControls.addEventListener('click', () => {
+            if (heroVideo.paused) {
+                heroVideo.play();
+                playPauseIcon.textContent = '⏸️';
+            } else {
+                heroVideo.pause();
+                playPauseIcon.textContent = '▶️';
+            }
+        });
+
+        // Handle video end (though it should loop)
+        heroVideo.addEventListener('ended', () => {
+            heroVideo.currentTime = 0;
+            heroVideo.play();
+        });
+
         // Mobile menu toggle
         const mobileToggle = document.querySelector('.mobile-menu-toggle');
         const mobileMenu = document.querySelector('.mobile-menu');
@@ -785,8 +866,8 @@
             mobileMenu.classList.toggle('active');
         });
 
-        // Close mobile menu when clicking on links
-        document.querySelectorAll('.mobile-menu .nav-link').forEach(link => {
+        // Close mobile menu when clicking on links or logo
+        document.querySelectorAll('.mobile-menu .nav-link, .mobile-menu .mobile-logo').forEach(link => {
             link.addEventListener('click', () => {
                 mobileToggle.classList.remove('active');
                 mobileMenu.classList.remove('active');
