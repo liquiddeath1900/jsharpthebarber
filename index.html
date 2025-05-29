@@ -54,12 +54,20 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary-black);
             text-decoration: none;
             cursor: pointer;
             transition: color 0.3s ease;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
         }
 
         .logo:hover {
@@ -103,40 +111,18 @@
         /* Hero Section */
         .hero {
             height: 100vh;
-            background: linear-gradient(135deg, #000 0%, #333 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             position: relative;
             overflow: hidden;
         }
 
-        .video-container {
+        .hero-video {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .video-placeholder {
-            width: 80%;
-            height: 60%;
-            background: linear-gradient(45deg, #222, #444);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            border: 2px solid var(--accent-gold);
-            opacity: 0;
-            transform: translateY(50px);
-            animation: fadeInUp 1s ease 0.5s forwards;
+            object-fit: cover;
+            z-index: 1;
         }
 
         .hero-overlay {
@@ -147,6 +133,7 @@
             background: linear-gradient(transparent, rgba(0,0,0,0.8));
             padding: 4rem 2rem 2rem;
             text-align: center;
+            z-index: 2;
         }
 
         .hero-title {
@@ -203,6 +190,7 @@
             width: 100%;
             height: 500px;
             object-fit: cover;
+            object-position: center top;
             transition: transform 0.5s ease;
         }
 
@@ -490,6 +478,7 @@
 
             .about-image img {
                 height: 350px;
+                object-position: center top;
             }
 
             .experience-grid {
@@ -593,7 +582,10 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#home" class="logo">PREMIUM CUTS</a>
+            <a href="#home" class="logo">
+                <img src="assets/images/porfileimage.jpeg" alt="Premium Cuts Logo">
+                PREMIUM CUTS
+            </a>
             <ul class="nav-menu">
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
@@ -603,15 +595,9 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-                <div class="video-container">
-                    <video autoplay muted loop style="width: 80%; height: 60%; border-radius: 20px; border: 2px solid var(--accent-gold); object-fit: cover;">
-                        <source src="assets/videos/WhatsApp Video 2025-05-22 at 15.53.01_1.mp4" type="video/mp4">
-                        <div class="video-placeholder">
-                            Brand Highlights Video
-                            <br><small>Your browser does not support the video tag</small>
-                        </div>
-                    </video>
-                </div>
+        <video class="hero-video" autoplay muted loop>
+            <source src="assets/videos/WhatsApp Video 2025-05-22 at 15.53.01_1.mp4" type="video/mp4">
+        </video>
         <div class="hero-overlay">
             <h1 class="hero-title">Experience Premium Mobile Barbering</h1>
             <p class="hero-subtitle">On Your Terms</p>
