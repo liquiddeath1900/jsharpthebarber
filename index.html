@@ -6,170 +6,195 @@
     <title>Premium Mobile Barbering</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
-        
-        :root {
-            --primary-black: #0a0a0a;
-            --soft-white: #fafafa;
-            --muted-gray: #666;
-            --light-gray: #e0e0e0;
-            --accent-gold: #d4af37;
-        }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
+        :root {
+            --primary-black: #0a0a0a;
+            --soft-gray: #f8f8f8;
+            --accent-gold: #d4af37;
+            --text-gray: #666;
+            --border-light: #e5e5e5;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--primary-black);
-            color: var(--soft-white);
             line-height: 1.6;
+            color: var(--primary-black);
             overflow-x: hidden;
         }
-        
+
+        /* Navigation */
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
-            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
-            background: rgba(10, 10, 10, 0.7);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 1000;
             transition: all 0.3s ease;
-            padding: 1rem 2rem;
         }
-        
+
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1rem 2rem;
         }
-        
+
         .logo {
-            height: 65px;
-            cursor: pointer;
-            filter: brightness(0) invert(1);
-            opacity: 0.9;
-            transition: opacity 0.3s ease;
-        }
-        
-        .logo:hover {
-            opacity: 0.7;
-        }
-        
-        .nav-menu {
             display: flex;
-            list-style: none;
-            gap: 3rem;
-        }
-        
-        .nav-menu a {
-            color: var(--soft-white);
+            align-items: center;
             text-decoration: none;
-            font-weight: 300;
-            letter-spacing: 1px;
-            font-size: 0.95rem;
-            position: relative;
-            transition: color 0.3s ease;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-        
-        .nav-menu a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--accent-gold);
-            transition: width 0.3s ease;
+
+        .logo img {
+            height: 65px;
+            width: auto;
+            filter: brightness(0) saturate(100%);
+            transition: all 0.3s ease;
         }
-        
-        .nav-menu a:hover::after {
-            width: 100%;
+
+        .logo:hover img {
+            filter: brightness(0) saturate(100%) opacity(70%);
         }
-        
-        .hamburger {
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
             display: none;
             flex-direction: column;
             cursor: pointer;
+            padding: 0.5rem;
             z-index: 1001;
         }
-        
-        .hamburger span {
+
+        .mobile-menu-toggle span {
             width: 25px;
-            height: 2px;
-            background: var(--soft-white);
+            height: 3px;
+            background: var(--primary-black);
             margin: 3px 0;
-            transition: 0.3s;
+            transition: all 0.3s ease;
         }
-        
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
         }
-        
-        .hamburger.active span:nth-child(2) {
+
+        .mobile-menu-toggle.active span:nth-child(2) {
             opacity: 0;
         }
-        
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
         }
-        
+
         .mobile-menu {
             position: fixed;
             top: 0;
-            left: -100%;
+            left: 0;
             width: 100%;
             height: 100vh;
-            background: rgba(10, 10, 10, 0.98);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            transition: left 0.3s ease;
-            z-index: 999;
+            align-items: center;
+            gap: 3rem;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
         }
-        
+
         .mobile-menu.active {
-            left: 0;
+            transform: translateX(0);
         }
-        
-        .mobile-menu img {
-            height: 80px;
-            margin-bottom: 3rem;
-            filter: brightness(0) invert(1);
-            cursor: pointer;
-        }
-        
-        .mobile-menu a {
-            color: var(--soft-white);
-            text-decoration: none;
-            font-size: 1.5rem;
-            margin: 1.5rem 0;
-            font-weight: 300;
-            letter-spacing: 2px;
-            transition: color 0.3s ease;
-        }
-        
-        .mobile-menu a:hover {
-            color: var(--accent-gold);
-        }
-        
-        .hero {
-            position: relative;
-            height: 100vh;
-            width: 100%;
-            overflow: hidden;
+
+        .mobile-menu .mobile-logo {
             display: flex;
             align-items: center;
-            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-        
+
+        .mobile-menu .mobile-logo img {
+            height: 80px;
+            width: auto;
+            filter: brightness(0) saturate(100%);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu .mobile-logo:hover img {
+            filter: brightness(0) saturate(100%) opacity(70%);
+        }
+
+        .mobile-menu .nav-link {
+            font-size: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--primary-black);
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu .nav-link:hover {
+            color: var(--accent-gold);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary-black);
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-gold);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
         .hero-video {
             position: absolute;
             top: 0;
@@ -177,26 +202,15 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: -1;
+            z-index: 1;
         }
-        
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.6));
-            z-index: 0;
-        }
-        
+
         .video-controls {
             position: absolute;
-            bottom: 30px;
-            right: 30px;
-            z-index: 10;
+            bottom: 20px;
+            right: 20px;
+            z-index: 3;
             background: rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -206,142 +220,291 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .video-controls:hover {
             background: rgba(0, 0, 0, 0.9);
             transform: scale(1.1);
         }
-        
-        .video-controls svg {
-            width: 20px;
-            height: 20px;
-            fill: white;
+
+        .video-controls .play-pause {
+            color: white;
+            font-size: 1.2rem;
+            pointer-events: none;
         }
-        
-        .section {
-            padding: 5rem 2rem;
+
+        .hero-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 300;
+            color: white;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 1s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 1.2s forwards;
+        }
+
+        /* About Section */
+        .about {
+            padding: 8rem 2rem;
+            background: var(--soft-gray);
+        }
+
+        .container {
             max-width: 1200px;
             margin: 0 auto;
         }
-        
-        .about-container {
+
+        .about-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
             align-items: center;
-            margin-top: 4rem;
         }
-        
+
         .about-image {
             position: relative;
             overflow: hidden;
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: translateX(-100px);
+            opacity: 0;
+            transition: all 0.8s ease;
         }
-        
+
+        .about-image.animate {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
         .about-image img {
             width: 100%;
-            height: 600px;
+            height: 500px;
             object-fit: cover;
             object-position: center 20%;
             transition: transform 0.5s ease;
         }
-        
+
         .about-image:hover img {
             transform: scale(1.05);
         }
-        
-        .about-content h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            margin-bottom: 2rem;
-            color: var(--soft-white);
-            font-weight: 400;
+
+        .about-text {
+            transform: translateX(100px);
+            opacity: 0;
+            transition: all 0.8s ease;
         }
-        
-        .about-content p {
+
+        .about-text.animate {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            color: var(--primary-black);
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .about-description {
             font-size: 1.1rem;
             line-height: 1.8;
-            color: var(--light-gray);
-            margin-bottom: 1.5rem;
-            font-weight: 300;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
         }
-        
+
         .experience-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
             margin-top: 3rem;
         }
-        
-        .experience-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
+
+        .experience-item {
             padding: 2rem;
-            transition: all 0.3s ease;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.6s ease;
         }
-        
-        .experience-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+
+        .experience-item.animate {
+            transform: translateY(0);
+            opacity: 1;
         }
-        
-        .experience-card h3 {
+
+        .experience-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .experience-icon {
             font-size: 2rem;
-            color: var(--accent-gold);
-            margin-bottom: 0.5rem;
-            font-weight: 300;
+            margin-bottom: 1rem;
         }
-        
-        .experience-card p {
-            color: var(--light-gray);
-            font-size: 0.95rem;
+
+        .experience-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-black);
         }
-        
+
+        .experience-desc {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
         .brands-section {
             margin-top: 4rem;
             text-align: center;
         }
-        
+
         .brands-title {
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 2rem;
             color: var(--primary-black);
         }
-        
+
         .brands-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
-        
+
         .brand-item {
             padding: 1.5rem;
             background: white;
             border-radius: 15px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-weight: 500;
+            color: var(--primary-black);
             transform: scale(0.9);
             opacity: 0;
             transition: all 0.5s ease;
         }
-        
+
         .brand-item.animate {
             transform: scale(1);
             opacity: 1;
         }
-        
+
         .brand-item:hover {
             transform: scale(1.05);
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
-        
+
+        /* Services Section */
+        .services {
+            padding: 8rem 2rem;
+            background: white;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .service-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            background: var(--soft-gray);
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .service-card.animate {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .service-card:hover {
+            background: white;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            transform: translateY(-10px);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 8rem 2rem;
+            background: var(--primary-black);
+            color: white;
+            text-align: center;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact .section-title {
+            color: white;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent-gold);
+            color: var(--primary-black);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+            transform: scale(0.9);
+            opacity: 0;
+        }
+
+        .cta-button.animate {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .cta-button:hover {
+            background: white;
+            transform: scale(1.05);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* Brand Logo Styles */
         .brand-logo {
             width: 100%;
@@ -350,354 +513,471 @@
             filter: grayscale(100%);
             transition: all 0.3s ease;
         }
-        
+
         .brand-logo:hover {
             filter: grayscale(0%);
             transform: scale(1.1);
         }
-        
-        .contact {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 30px;
-            padding: 4rem;
-            text-align: center;
-            margin-top: 4rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+
+        /* Enhanced Mobile Responsive */
+        @media (max-width: 1200px) {
+            .nav-container {
+                padding: 1rem 1.5rem;
+            }
+            
+            .container {
+                padding: 0 1.5rem;
+            }
         }
-        
-        .contact h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            color: var(--soft-white);
-            font-weight: 400;
-        }
-        
-        .contact p {
-            font-size: 1.2rem;
-            color: var(--light-gray);
-            margin-bottom: 2rem;
-            font-weight: 300;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 3rem;
-            background: var(--accent-gold);
-            color: var(--primary-black);
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: 500;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
-        }
-        
-        .cta-button:hover {
-            background: #b8941f;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
-        }
-        
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-        
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .slide-in-left {
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: all 0.8s ease;
-        }
-        
-        .slide-in-left.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
-        .slide-in-right {
-            opacity: 0;
-            transform: translateX(50px);
-            transition: all 0.8s ease;
-        }
-        
-        .slide-in-right.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
+
         @media (max-width: 768px) {
+            .nav-container {
+                padding: 1rem;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .logo img {
+                height: 55px;
+            }
+
             .hero {
                 height: 70vh;
             }
-            
+
             .hero-video {
                 object-fit: contain;
                 background: #000;
             }
-            
+
             .video-controls {
+                bottom: 15px;
+                right: 15px;
                 width: 45px;
                 height: 45px;
-                bottom: 20px;
-                right: 20px;
             }
-            
-            .nav-menu {
-                display: none;
+
+            .brand-logo {
+                height: 70px;
             }
-            
-            .hamburger {
-                display: flex;
-            }
-            
-            .logo {
-                height: 55px;
-            }
-            
-            .section {
-                padding: 3rem 1.5rem;
-            }
-            
-            .about-container {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            
-            .about-content h2 {
-                font-size: 2rem;
-            }
-            
-            .about-image img {
-                height: 400px;
-                object-position: center 20%;
-            }
-            
-            .experience-grid {
-                grid-template-columns: 1fr;
-            }
-            
+
             .brands-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 1.5rem;
             }
-            
+
             .brand-item {
                 padding: 1.5rem;
+                font-size: 0.9rem;
             }
-            
-            .brand-logo {
-                height: 70px;
+
+            .video-placeholder {
+                width: 90%;
+                height: 50%;
+                font-size: 1rem;
             }
-            
-            .contact {
-                padding: 3rem 2rem;
-            }
-            
-            .contact h2 {
+
+            .hero-title {
                 font-size: 2rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-overlay {
+                padding: 2rem 1rem 1rem;
+            }
+
+            .about, .services, .contact {
+                padding: 4rem 1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .about-image, .about-text {
+                transform: translateY(50px);
+            }
+
+            .about-image.animate, .about-text.animate {
+                transform: translateY(0);
+            }
+
+            .about-image img {
+                height: 350px;
+                object-position: center 20%;
+            }
+
+            .experience-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .experience-item {
+                padding: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                text-align: center;
+            }
+
+            .section-subtitle {
+                font-size: 1.1rem;
+                text-align: center;
+            }
+
+            .about-description {
+                font-size: 1rem;
+                text-align: center;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .service-card {
+                padding: 2rem 1rem;
             }
         }
-        
+
         @media (max-width: 480px) {
+            .logo img {
+                height: 50px;
+            }
+
             .hero {
                 height: 60vh;
             }
-            
+
+            .hero-video {
+                object-fit: contain;
+            }
+
             .video-controls {
+                bottom: 10px;
+                right: 10px;
                 width: 40px;
                 height: 40px;
             }
-            
-            .logo {
-                height: 50px;
+
+            .brand-logo {
+                height: 60px;
             }
-            
+
             .brands-grid {
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
-            
+
             .brand-item {
                 padding: 1.2rem;
             }
-            
-            .brand-logo {
-                height: 60px;
+
+            .hero-title {
+                font-size: 1.5rem;
             }
+
+            .hero-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .experience-grid {
+                gap: 1rem;
+            }
+
+            .experience-item {
+                padding: 1rem;
+            }
+
+            .experience-title {
+                font-size: 1.1rem;
+            }
+
+            .about, .services, .contact {
+                padding: 3rem 0.5rem;
+            }
+        }
+
+        /* Scroll animations trigger */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.animate {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <img src="assets/images/logo.png" alt="JSHARPZ THE [BARBER]" class="logo" onclick="scrollToTop()">
+            <a href="#home" class="logo">
+                <img src="assets/images/logo.png" alt="JSHARPZ THE BARBER">
+            </a>
             <ul class="nav-menu">
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
-            <div class="hamburger" onclick="toggleMobileMenu()">
+            <div class="mobile-menu-toggle">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu">
+            <a href="#home" class="mobile-logo">
+                <img src="assets/images/logo.png" alt="JSHARPZ THE BARBER">
+            </a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="#contact" class="nav-link">Contact</a>
         </div>
     </nav>
-    
-    <div class="mobile-menu">
-        <img src="assets/images/logo.png" alt="JSHARPZ THE [BARBER]" onclick="scrollToTop(); toggleMobileMenu()">
-        <a href="#about" onclick="toggleMobileMenu()">About</a>
-        <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
-    </div>
-    
-    <section class="hero">
-        <video class="hero-video" autoplay muted loop playsinline id="heroVideo">
-            <source src="assets/videos/WhatsApp Video 2025-05-28 at 7.50.16 PM.mp4" type="video/mp4">
-            Your browser does not support the video tag.
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <video id="heroVideo" class="hero-video" autoplay muted loop playsinline>
+            <source src="assets/videos/WhatsApp Video 2025-05-22 at 15.53.01_1.mp4" type="video/mp4">
         </video>
-        <div class="hero-overlay"></div>
-        <div class="video-controls" onclick="toggleVideo()">
-            <svg id="playPauseIcon" viewBox="0 0 24 24">
-                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-            </svg>
+        <div class="video-controls" id="videoControls">
+            <span class="play-pause">⏸️</span>
         </div>
     </section>
-    
-    <section id="about" class="section fade-in">
-        <div class="about-container">
-            <div class="about-image slide-in-left">
-                <img src="assets/images/porfileimage.jpeg" alt="Master Barber" />
-            </div>
-            <div class="about-content slide-in-right">
-                <h2>Experience Premium Mobile Barbering</h2>
-                <p>Thank you for your interest in my mobile barbering service, where convenience meets quality. Enjoy a professional grooming experience at your preferred location — whether it's your home, workplace, a friend's place, or even outdoors.</p>
-                <p>I deliver sharp, personalized haircuts using only the latest in styling tools and cruelty-free, premium grooming products. My service is designed to save you time, keep you looking fresh, and ensure you're ready to stand out — every day.</p>
-                
-                <div class="experience-grid">
-                    <div class="experience-card fade-in">
-                        <h3>25+</h3>
-                        <p>Years of Experience</p>
-                    </div>
-                    <div class="experience-card fade-in">
-                        <h3>Premium</h3>
-                        <p>Cruelty-Free Products</p>
-                    </div>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="assets/images/porfileimage.jpeg" alt="Master Barber" />
                 </div>
-                
-                <div class="brands-section fade-in">
-                    <h3 class="brands-title">Trusted by Industry Leaders</h3>
-                    <div class="brands-grid">
-                        <div class="brand-item">
-                            <img src="assets/images/kiehls-logo.png" alt="Kiehl's" class="brand-logo">
-                        </div>
-                        <div class="brand-item">
-                            <img src="assets/images/clinique-logo.png" alt="Clinique" class="brand-logo">
-                        </div>
-                        <div class="brand-item">
-                            <img src="assets/images/lelabo-logo.png" alt="Lè Labo" class="brand-logo">
-                        </div>
-                        <div class="brand-item">
-                            <img src="assets/images/parma-logo.png" alt="Acqua di Parma" class="brand-logo">
-                        </div>
-                        <div class="brand-item">
-                            <img src="assets/images/chanel-logo.png" alt="Chanel" class="brand-logo">
-                        </div>
-                        <div class="brand-item">
-                            <img src="assets/images/dior-logo.png" alt="Dior" class="brand-logo">
-                        </div>
-                        <div class="brand-item">
-                            <img src="assets/images/martell-logo.png" alt="Martell" class="brand-logo">
-                        </div>
-                        <div class="brand-item">
-                            <img src="assets/images/red-logo.png" alt="Red Pro by Kiss" class="brand-logo">
-                        </div>
-                    </div>
+                <div class="about-text">
+                    <h2 class="section-title">Luxury Grooming at Your Convenience</h2>
+                    <p class="section-subtitle">Where Precision Meets Convenience</p>
+                    <p class="about-description">
+                        Welcome to a premium mobile barbering experience where convenience meets quality. 
+                        Whether you're at home, in the office, visiting a friend, or even outdoors, I bring 
+                        the barbershop to you — delivering top-tier haircuts and personalized grooming on your terms.
+                    </p>
+                    <p class="about-description">
+                        I use only cruelty-free products and the most advanced styling tools on the market to 
+                        ensure every session leaves you looking sharp, refreshed, and confident. The choice is 
+                        yours — why not make it a convenient one?
+                    </p>
                 </div>
             </div>
+
+            <div class="experience-grid">
+                <div class="experience-item">
+                    <div class="experience-icon">💈</div>
+                    <h3 class="experience-title">25+ Years of Experience</h3>
+                    <p class="experience-desc">
+                        With over two decades in barbering and customer service, I bring a deep understanding 
+                        of facial structure, symmetry, and contouring to craft the best look for you.
+                    </p>
+                </div>
+                <div class="experience-item">
+                    <div class="experience-icon">🧴</div>
+                    <h3 class="experience-title">Top-Shelf Products</h3>
+                    <p class="experience-desc">
+                        Every haircut is tailored not just to your style, but to your skin and grooming 
+                        preferences using premium, cruelty-free products.
+                    </p>
+                </div>
+                <div class="experience-item">
+                    <div class="experience-icon">🏠</div>
+                    <h3 class="experience-title">Your Space, Your Choice</h3>
+                    <p class="experience-desc">
+                        Home, office, friend's place, or outdoors — I deliver professional grooming 
+                        wherever it's most convenient for you.
+                    </p>
+                </div>
+                <div class="experience-item">
+                    <div class="experience-icon">⚡</div>
+                    <h3 class="experience-title">Time-Saving Excellence</h3>
+                    <p class="experience-desc">
+                        Skip the travel and waiting. Get premium cuts that save you time while keeping 
+                        you looking fresh and ready to stand out.
+                    </p>
+                </div>
+            </div>
+
+           <div class="brands-section fade-in">
+    <h3 class="brands-title">Trusted by Industry Leaders</h3>
+    <div class="brands-grid">
+        <div class="brand-item">
+            <img src="assets/images/kiehls-logo.png" alt="Kiehl's" class="brand-logo">
+        </div>
+        <div class="brand-item">
+            <img src="assets/images/clinique-logo.png" alt="Clinique" class="brand-logo">
+        </div>
+        <div class="brand-item">
+            <img src="assets/images/lelabo-logo.png" alt="Lè Labo" class="brand-logo">
+        </div>
+        <div class="brand-item">
+            <img src="assets/images/parma-logo.png" alt="Acqua di Parma" class="brand-logo">
+        </div>
+        <div class="brand-item">
+            <img src="assets/images/chanel-logo.png" alt="Chanel" class="brand-logo">
+        </div>
+        <div class="brand-item">
+            <img src="assets/images/dior-logo.png" alt="Dior" class="brand-logo">
+        </div>
+        <div class="brand-item">
+            <img src="assets/images/martell-logo.png" alt="Martell" class="brand-logo">
+        </div>
+        <div class="brand-item">
+            <img src="assets/images/red-logo.png" alt="Red Pro by Kiss" class="brand-logo">
+        </div>
+    </div>
+</div>
+            </div>
         </div>
     </section>
-    
-    <section id="contact" class="section fade-in">
-        <div class="contact">
-            <h2>Your Style. Your Space. Your Choice.</h2>
-            <p>"Remember, the choice is yours — why not make it a convenient one?"</p>
-            <a href="#" class="cta-button">Book Your Experience</a>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-content">
+                <h2 class="section-title fade-in">Ready for Your Premium Experience?</h2>
+                <p class="about-description fade-in">
+                    Book your personalized mobile barbering session today. Professional grooming, 
+                    premium products, and unmatched convenience — all delivered to your preferred location.
+                </p>
+                <a href="#" class="cta-button">Book Your Session</a>
+            </div>
         </div>
     </section>
-    
+
     <script>
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        
-        function toggleMobileMenu() {
-            const hamburger = document.querySelector('.hamburger');
-            const mobileMenu = document.querySelector('.mobile-menu');
-            hamburger.classList.toggle('active');
+        // Video controls
+        const heroVideo = document.getElementById('heroVideo');
+        const videoControls = document.getElementById('videoControls');
+        const playPauseIcon = videoControls.querySelector('.play-pause');
+
+        // Force video to play on load
+        heroVideo.addEventListener('loadeddata', () => {
+            heroVideo.play().catch(e => {
+                console.log('Autoplay prevented:', e);
+            });
+        });
+
+        // Video control functionality
+        videoControls.addEventListener('click', () => {
+            if (heroVideo.paused) {
+                heroVideo.play();
+                playPauseIcon.textContent = '⏸️';
+            } else {
+                heroVideo.pause();
+                playPauseIcon.textContent = '▶️';
+            }
+        });
+
+        // Handle video end (though it should loop)
+        heroVideo.addEventListener('ended', () => {
+            heroVideo.currentTime = 0;
+            heroVideo.play();
+        });
+
+        // Mobile menu toggle
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        mobileToggle.addEventListener('click', () => {
+            mobileToggle.classList.toggle('active');
             mobileMenu.classList.toggle('active');
-        }
-        
+        });
+
+        // Close mobile menu when clicking on links or logo
+        document.querySelectorAll('.mobile-menu .nav-link, .mobile-menu .mobile-logo').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
             });
         });
-        
+
+        // Scroll animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
         };
-        
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+                    entry.target.classList.add('animate');
                 }
             });
         }, observerOptions);
-        
-        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+
+        // Observe elements for animation
+        document.querySelectorAll('.about-image, .about-text, .experience-item, .brand-item, .service-card, .fade-in, .cta-button').forEach(el => {
             observer.observe(el);
         });
-        
-        const experienceCards = document.querySelectorAll('.experience-card');
-        experienceCards.forEach((card, index) => {
-            card.style.transitionDelay = `${index * 0.1}s`;
-        });
-        
-        const brandItems = document.querySelectorAll('.brand-item');
-        brandItems.forEach((item, index) => {
-            item.classList.add('fade-in');
-            item.style.transitionDelay = `${index * 0.05}s`;
-        });
-        
-        const video = document.getElementById('heroVideo');
-        const playPauseIcon = document.getElementById('playPauseIcon');
-        
-        // Force video to play on load
-        window.addEventListener('load', () => {
-            video.play().catch(e => console.log('Video autoplay prevented:', e));
-        });
-        
-        function toggleVideo() {
-            if (video.paused) {
-                video.play();
-                playPauseIcon.innerHTML = '<path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>';
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
             } else {
-                video.pause();
-                playPauseIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = 'none';
             }
-        }
+        });
+
+        // Staggered animation for brand items
+        const brandItems = document.querySelectorAll('.brand-item');
+        const brandObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const index = Array.from(brandItems).indexOf(entry.target);
+                    setTimeout(() => {
+                        entry.target.classList.add('animate');
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+
+        brandItems.forEach(item => {
+            brandObserver.observe(item);
+        });
     </script>
 </body>
 </html>
