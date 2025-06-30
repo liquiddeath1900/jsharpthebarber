@@ -564,6 +564,8 @@
             
             .mobile-video {
                 display: block;
+                width: 100%;
+                height: 100%;
                 object-fit: cover;
                 object-position: center;
             }
@@ -571,10 +573,14 @@
             /* Update hero height for mobile to use full viewport */
             .hero {
                 height: 100vh;
+                height: 100dvh; /* Dynamic viewport height for mobile browsers */
+                max-height: -webkit-fill-available; /* iOS Safari fix */
             }
             
-            /* Remove the contain and black background for mobile */
+            /* Ensure video fills the entire hero section */
             .hero-video {
+                width: 100%;
+                height: 100%;
                 object-fit: cover;
                 background: none;
             }
@@ -679,12 +685,19 @@
                 height: 50px;
             }
 
+            /* Ensure full viewport height on small phones */
             .hero {
-                height: 60vh;
+                height: 100vh;
+                height: 100dvh;
+                max-height: -webkit-fill-available;
             }
 
-            .hero-video {
-                object-fit: contain;
+            /* Make sure mobile video covers full screen */
+            .mobile-video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
             }
 
             .video-controls {
