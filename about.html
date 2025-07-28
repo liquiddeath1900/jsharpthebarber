@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - JSHARPZ THE BARBER</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-black: #0a0a0a;
+            --soft-gray: #f8f8f8;
+            --accent-gold: #d4af37;
+            --text-gray: #666;
+            --border-light: #e5e5e5;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--primary-black);
+            overflow-x: hidden;
+        }
+
+        /* Navigation - Same as main site */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logo img {
+            height: 65px;
+            width: auto;
+            filter: brightness(0) saturate(100%);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover img {
+            filter: brightness(0) saturate(100%) opacity(70%);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-black);
+            margin: 3px 0;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu .mobile-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu .mobile-logo img {
+            height: 80px;
+            width: auto;
+            filter: brightness(0) saturate(100%);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu .mobile-logo:hover img {
+            filter: brightness(0) saturate(100%) opacity(70%);
+        }
+
+        .mobile-menu .nav-link {
+            font-size: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--primary-black);
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu .nav-link:hover {
+            color: var(--accent-gold);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary-black);
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-gold);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* About Hero Section */
+        .about-hero {
+            padding-top: 120px;
+            padding-bottom: 4rem;
+            background: var(--soft-gray);
+            text-align: center;
+        }
+
+        .about-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 400;
+            color: var(--primary-black);
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .about-hero p {
+            font-size: 1.3rem;
+            color: var(--accent-gold);
+            font-weight: 300;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.2s forwards;
+        }
+
+        /* About Content Section */
+        .about-content {
+            padding: 5rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .about-intro {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: var(--primary-black);
+            margin-bottom: 4rem;
+            text-align: center;
+            font-weight: 300;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.4s forwards;
+        }
+
+        .about-intro em {
+            font-style: italic;
+            color: var(--accent-gold);
+        }
+
+        .story-section {
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+
+        .story-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary-black);
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .story-section h3 {
+            font-size: 1.8rem;
+            color: var(--primary-black);
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .story-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .signature {
+            text-align: center;
+            margin-top: 5rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .signature .tagline {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .signature .name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-black);
+            letter-spacing: 2px;
+        }
+
+        .highlight-quote {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--primary-black);
+            text-align: center;
+            margin: 3rem 0;
+            padding: 2rem;
+            border-left: 4px solid var(--accent-gold);
+            background: var(--soft-gray);
+            font-style: italic;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 4rem 2rem;
+            background: var(--primary-black);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #ccc;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent-gold);
+            color: var(--primary-black);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: white;
+            transform: scale(1.05);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 1rem;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .logo img {
+                height: 55px;
+            }
+
+            .about-hero {
+                padding-top: 100px;
+                padding-bottom: 3rem;
+            }
+
+            .about-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-hero p {
+                font-size: 1.1rem;
+            }
+
+            .about-content {
+                padding: 3rem 1.5rem;
+            }
+
+            .about-intro {
+                font-size: 1.1rem;
+                margin-bottom: 3rem;
+            }
+
+            .story-section h2 {
+                font-size: 2rem;
+            }
+
+            .story-section h3 {
+                font-size: 1.5rem;
+            }
+
+            .story-section p {
+                font-size: 1rem;
+            }
+
+            .highlight-quote {
+                font-size: 1.2rem;
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo img {
+                height: 50px;
+            }
+
+            .about-hero h1 {
+                font-size: 2rem;
+            }
+
+            .about-hero p {
+                font-size: 1rem;
+            }
+
+            .about-content {
+                padding: 2rem 1rem;
+            }
+
+            .story-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .story-section h3 {
+                font-size: 1.3rem;
+            }
+
+            .signature .tagline {
+                font-size: 1rem;
+            }
+
+            .signature .name {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo.png" alt="JSHARPZ THE BARBER">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu">
+            <a href="index.html" class="mobile-logo">
+                <img src="assets/images/logo.png" alt="JSHARPZ THE BARBER">
+            </a>
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="index.html#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+    <!-- About Hero -->
+    <section class="about-hero">
+        <h1>About Me</h1>
+        <p>The Story Behind the Scissors</p>
+    </section>
+
+    <!-- About Content -->
+    <section class="about-content">
+        <div class="about-intro">
+            I'm a New York-based mobile barber, redefining what it means to get a haircut. I bring the experience to <em>you</em>—whether you're at home, the office, or preparing for a big event. My service isn't about rushing through appointments in a busy shop; it's about slowing down and offering a luxury experience that's personal, convenient, and tailored to you.
+        </div>
+
+        <div class="story-section">
+            <h2>How It All Started</h2>
+            <p>
+                My journey began at 11 years old in a Bronx barbershop. I was already passionate about art, especially graffiti, and naturally drawn to anything creative. That artistic eye—seeing potential in blank spaces, understanding lines and shapes—made the transition into barbering feel like second nature.
+            </p>
+            <p>
+                I had this one barber I trusted completely. But after a few visits, he vanished. I bounced around from chair to chair, trying to find someone who could deliver the same quality—but none came close. Being naturally observant, I'd been studying his techniques all along. So I decided to take matters into my own hands.
+            </p>
+            <p>
+                What started as cutting my own hair out of necessity evolved into weekend sessions for my little brother, then neighborhood kids. After gaining experience working in traditional barbershops for a few years, an idea struck me—what if I could take this skill directly to people? No waiting rooms, no commutes—just high-quality cuts wherever the client needed me.
+            </p>
+
+            <h3>From Vision to Reality</h3>
+            <p>
+                It took time, trial and error, and creativity, but that idea became reality. Today, I've partnered with some of the most iconic names in retail and fashion—Bloomingdale's, Barneys, Neiman Marcus, Macy's, Nordstrom—and collaborated with prestige brands like Dior, Acqua di Parma, Kiehl's, Le Labo, Red Pro by Kiss, and Martell. These events combine grooming and brand experience to deliver something memorable and elevated.
+            </p>
+            <p>
+                But beyond the glitz, I'm deeply rooted in the community. I regularly work with local schools like Medgar Evers College and The Nicholas Herkimer School, autism support organizations, and initiatives like We Build the Block, Project ECHO, and Brown Paper Bag. For years, I've worked closely with longtime friend and fellow barber Clai Sculpts to provide free haircuts to youth across CT, NY, and NJ—educating kids about grooming, hygiene, personal finance, and real-life values that matter.
+            </p>
+            <p>
+                I also visit senior homes and homeless shelters to offer haircuts where they're needed most. Because to me, a good haircut is more than just a fresh look—it can boost confidence, restore dignity, and even change someone's outlook.
+            </p>
+
+            <h3>Beyond New York</h3>
+            <p>
+                My reach doesn't stop at the five boroughs. I've built a network of trusted barbers around the world, so if a client needs a cut in another city or country, I've got someone I can confidently recommend. That's the level of service I provide—professional, personal, and global.
+            </p>
+            <p>
+                This is more than a service—it's a mission. And it all started with a pair of clippers, a little creativity, and a lot of heart.
+            </p>
+        </div>
+
+        <div class="highlight-quote">
+            A great haircut can change your day. The right experience can change your life. I'm here to deliver both.
+        </div>
+
+        <div class="signature">
+            <p class="tagline">"Changing the look of things"</p>
+            <p class="tagline">"It's your time, why not make it a convenient one"</p>
+            <p class="name">~JSHARPZ</p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Ready to Experience the Difference?</h2>
+        <p>Book your personalized mobile barbering session today.</p>
+        <a href="index.html#contact" class="cta-button">Book Your Session</a>
+    </section>
+
+    <script>
+        // Mobile menu toggle
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        mobileToggle.addEventListener('click', () => {
+            mobileToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on links or logo
+        document.querySelectorAll('.mobile-menu .nav-link, .mobile-menu .mobile-logo').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.story-section, .highlight-quote, .signature').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
