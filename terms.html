@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions - JSHARPZ THE BARBER | Mobile Barbering Services</title>
+    <meta name="description" content="Terms and Conditions for JSHARPZ THE BARBER premium mobile barbering services. Professional grooming delivered to your location across NYC and surrounding areas.">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-black: #1a1a1a;
+            --soft-gray: #f8f8f8;
+            --accent-gold: #d4af37;
+            --text-gray: #666;
+            --border-light: #e5e5e5;
+            --tangem-blue: #0066cc;
+            --tangem-dark: #004499;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--primary-black);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logo img {
+            height: 65px;
+            width: auto;
+            filter: brightness(0) saturate(100%);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover img {
+            filter: brightness(0) saturate(100%) opacity(70%);
+        }
+
+        /* Navigation Links */
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary-black);
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: var(--tangem-blue);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--tangem-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-black);
+            margin: 3px 0;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu .mobile-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu .mobile-logo img {
+            height: 80px;
+            width: auto;
+            filter: brightness(0) saturate(100%);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu .nav-link {
+            font-size: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--primary-black);
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu .nav-link:hover {
+            color: var(--tangem-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 120px;
+            padding-bottom: 60px;
+            background: linear-gradient(135deg, var(--primary-black) 0%, var(--tangem-dark) 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.2s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.4s forwards;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+
+        /* Terms Content */
+        .terms-content {
+            padding: 80px 2rem;
+            background: white;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .terms-wrapper {
+            background: var(--soft-gray);
+            padding: 4rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 0.8s ease;
+        }
+
+        .terms-wrapper.animate {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .terms-section {
+            margin-bottom: 3rem;
+        }
+
+        .terms-section h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--primary-black);
+            border-bottom: 2px solid var(--tangem-blue);
+            padding-bottom: 0.5rem;
+        }
+
+        .terms-section h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+            color: var(--tangem-dark);
+        }
+
+        .terms-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .terms-section ul {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .terms-section li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .effective-date {
+            text-align: center;
+            font-size: 1rem;
+            color: var(--text-gray);
+            font-style: italic;
+            margin-bottom: 3rem;
+        }
+
+        /* Back to Home Button */
+        .back-home {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--tangem-blue) 0%, var(--tangem-dark) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 102, 204, 0.3);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 1rem;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .logo img {
+                height: 55px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .terms-wrapper {
+                padding: 2rem;
+            }
+
+            .terms-content {
+                padding: 60px 1rem;
+            }
+
+            .terms-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .terms-section h3 {
+                font-size: 1.2rem;
+            }
+
+            .terms-section p,
+            .terms-section li {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo img {
+                height: 50px;
+            }
+
+            .hero {
+                padding-top: 100px;
+                padding-bottom: 40px;
+            }
+
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .terms-wrapper {
+                padding: 1.5rem;
+            }
+
+            .terms-content {
+                padding: 40px 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo.png" alt="JSHARPZ THE BARBER">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+                <li><a href="https://www.instagram.com/jsharpzthebarber/" target="_blank" class="nav-link" title="Follow us on Instagram">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a></li>
+            </ul>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu">
+            <a href="index.html" class="mobile-logo">
+                <img src="assets/images/logo.png" alt="JSHARPZ THE BARBER">
+            </a>
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="https://www.instagram.com/jsharpzthebarber/" target="_blank" class="nav-link" title="Follow us on Instagram">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: inline-block; vertical-align: middle; margin-right: 8px;">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.40z"/>
+                </svg>
+                Instagram
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Terms & Conditions</h1>
+            <p class="hero-subtitle">JSHARPZ THE BARBER Mobile Services</p>
+            <p class="hero-description">
+                Please review our terms and conditions for mobile barbering services. These terms ensure a professional and mutually beneficial experience for all clients.
+            </p>
+        </div>
+    </section>
+
+    <!-- Terms Content -->
+    <section class="terms-content">
+        <div class="container">
+            <div class="terms-wrapper">
+                <div class="effective-date">
+                    Effective Date: January 1, 2025
+                </div>
+
+                <div class="terms-section">
+                    <h2>1. Services Overview</h2>
+                    <p>JSHARPZ THE BARBER ("Company," "we," "our," "us") provides premium mobile barbering services, bringing professional grooming directly to clients' preferred locations including homes, offices, hotels, and other agreed-upon venues throughout NYC and surrounding areas.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2>2. Booking and Scheduling</h2>
+                    <h3>2.1 Appointment Booking</h3>
+                    <p>Appointments must be scheduled in advance through our designated booking channels (phone, email, or online platform). Same-day appointments are subject to availability.</p>
+                    
+                    <h3>2.2 Confirmation</h3>
+                    <p>All appointments require confirmation 24 hours prior to the scheduled service. Failure to confirm may result in appointment cancellation.</p>
+                    
+                    <h3>2.3 Location Requirements</h3>
+                    <p>Client must provide a suitable location with adequate lighting, electrical access, and appropriate space for service delivery. Indoor locations are preferred for optimal service quality.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2>3. Payment Terms</h2>
+                    <h3>3.1 Payment Methods</h3>
+                    <p>We accept cash, major credit cards, and digital payment methods (Venmo, Cash App, etc.). Payment is due upon completion of services unless prior arrangements have been made.</p>
+                    
+                    <h3>3.2 Pricing</h3>
+                    <p>Service pricing is determined based on the type of service requested and location. Travel fees may apply for locations outside our standard service area. All prices will be communicated prior to service confirmation.</p>
+                    
+                    <h3>3.3 Gratuity</h3>
+                    <p>Gratuity is appreciated but not mandatory. Any tips are at the client's discretion.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2>4. Cancellation and Rescheduling</h2>
+                    <h3>4.1 Client Cancellations</h3>
+                    <p>Clients may cancel or reschedule appointments with at least 4 hours notice without penalty. Cancellations made with less than 4 hours notice may be subject to a cancellation fee equal to 50% of the service cost.</p>
+                    
+                    <h3>4.2 No-Show Policy</h3>
+                    <p>Clients who fail to be present at the scheduled time and location without prior notice will be charged the full service fee.</p>
+                    
+                    <h3>4.3 Company Cancellations</h3>
+                    <p>In the event that we must cancel an appointment due to unforeseen circumstances, clients will receive full refund of any prepaid amounts and priority rebooking.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2>5. Service Standards and Expectations</h2>
+                    <h3>5.1 Professional Standards</h3>
+                    <p>All services are performed by licensed professionals using sanitized, professional-grade equipment and premium products.</p>
+                    
+                    <h3>5.2 Health and Safety</h3>
+                    <p>We maintain strict health and safety protocols including equipment sanitization between clients and adherence to all applicable health regulations.</p>
+                    
+                    <h3>5.3 Client Consultation</h3>
+                    <p>A brief consultation will be conducted before each service to ensure client satisfaction and address any specific requirements or concerns.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2>6. Liability and Insurance</h2>
+                    <h3>6.1 Limitation of Liability</h3>
+                    <p>Our liability is limited to the cost of the services provided. We maintain professional liability insurance and are not responsible for any indirect, incidental, or consequential damages.</p>
+                    
+                    <h3>6.2 Client Property</h3>
+                    <p>While we take care to protect client property during service delivery, clients are responsible for securing valuable items. We are not liable for damage to client property unless directly caused by our negligence.</p>
+                    
+                    <h3>6.3 Allergic Reactions</h3>
+                    <p>Clients must inform us of any known allergies to hair care products or fragrances prior to service. We are not liable for allergic reactions to products when proper disclosure was not made.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2>7. Privacy and Confidentiality</h2>
+                    <p>We respect client privacy and maintain confidentiality regarding all client information and service details. Client information will not be shared with third parties without explicit consent, except as required by law.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2>8. Dispute Resolution</h2>
+                    <h3>8.1 Communication First</h3>
+                    <p>Any concerns or disputes should first be addressed directly with our management team for prompt resolution.</p>
+                    
+                    <h3>8.2 Mediation</h3>
+                    <p>If direct resolution is not possible, disputes will be resolved through mediation in accordance with New York State law.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2>9. Modifications to Terms</h2>
+                    <p>These terms and conditions may be updated periodically. Clients will be notified of any significant changes via email or our website. Continued use of our services constitutes acceptance of updated terms.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2>10. Contact Information</h2>
+                    <p>For questions regarding these terms and conditions or our services, please contact us through our designated communication channels as provided on our website or booking platform.</p>
+                </div>
+
+                <div class="back-home">
+                    <a href="index.html" class="back-button">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Mobile menu toggle
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        mobileToggle.addEventListener('click', () => {
+            mobileToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on links or logo
+        document.querySelectorAll('.mobile-menu .nav-link, .mobile-menu .mobile-logo').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.terms-wrapper').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - JSHARPZ THE BARBER | Premium Mobile Barbering</title>
+    <meta name="description" content="Contact JSHARPZ THE BARBER for premium mobile barbering services. Professional grooming delivered to your location across NYC and surrounding areas.">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-black: #1a1a1a;
+            --soft-gray: #f8f8f8;
+            --accent-gold: #d4af37;
+            --text-gray: #666;
+            --border-light: #e5e5e5;
+            --tangem-blue: #0066cc;
+            --tangem-dark: #004499;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--primary-black);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logo img {
+            height: 65px;
+            width: auto;
+            filter: brightness(0) saturate(100%);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover img {
+            filter: brightness(0) saturate(100%) opacity(70%);
+        }
+
+        /* Navigation Links */
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary-black);
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: var(--tangem-blue);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--tangem-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-black);
+            margin: 3px 0;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu .mobile-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu .mobile-logo img {
+            height: 80px;
+            width: auto;
+            filter: brightness(0) saturate(100%);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu .nav-link {
+            font-size: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--primary-black);
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu .nav-link:hover {
+            color: var(--tangem-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 120px;
+            padding-bottom: 60px;
+            background: linear-gradient(135deg, var(--primary-black) 0%, var(--tangem-dark) 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.2s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.4s forwards;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 80px 2rem;
+            background: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: start;
+        }
+
+        .contact-info {
+            transform: translateX(-50px);
+            opacity: 0;
+            transition: all 0.8s ease;
+        }
+
+        .contact-info.animate {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .contact-info h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--primary-black);
+        }
+
+        .contact-info p {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--soft-gray);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+
+        .contact-item .icon {
+            width: 50px;
+            height: 50px;
+            background: var(--tangem-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.5rem;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .contact-item .details h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-black);
+        }
+
+        .contact-item .details p {
+            color: var(--text-gray);
+            margin: 0;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            background: var(--soft-gray);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateX(50px);
+            opacity: 0;
+            transition: all 0.8s ease;
+        }
+
+        .contact-form.animate {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .contact-form h3 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--primary-black);
+            text-align: center;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-black);
+        }
+
+        .form-input,
+        .form-textarea {
+            padding: 1rem;
+            border: 2px solid var(--border-light);
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--tangem-blue);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-submit {
+            background: linear-gradient(135deg, var(--tangem-blue) 0%, var(--tangem-dark) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            align-self: center;
+            justify-self: center;
+            width: fit-content;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 102, 204, 0.3);
+        }
+
+        /* Services Preview */
+        .services-preview {
+            padding: 80px 2rem;
+            background: var(--soft-gray);
+        }
+
+        .services-preview h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 3rem;
+            color: var(--primary-black);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            transform: translateY(30px);
+            opacity: 0;
+        }
+
+        .service-item.animate {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .service-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+
+        .service-item .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-item h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-black);
+        }
+
+        .service-item p {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 1rem;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .logo img {
+                height: 55px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .contact-info,
+            .contact-form {
+                transform: translateY(50px);
+            }
+
+            .contact-info.animate,
+            .contact-form.animate {
+                transform: translateY(0);
+            }
+
+            .contact-info h2 {
+                font-size: 2rem;
+                text-align: center;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                padding: 2rem;
+            }
+
+            .contact-section,
+            .services-preview {
+                padding: 60px 1rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo img {
+                height: 50px;
+            }
+
+            .hero {
+                padding-top: 100px;
+                padding-bottom: 40px;
+            }
+
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .contact-info h2 {
+                font-size: 1.8rem;
+            }
+
+            .contact-form h3 {
+                font-size: 1.5rem;
+            }
+
+            .contact-form {
+                padding: 1.5rem;
+            }
+
+            .contact-section,
+            .services-preview {
+                padding: 40px 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo.png" alt="JSHARPZ THE BARBER">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+                <li><a href="https://www.instagram.com/jsharpzthebarber/" target="_blank" class="nav-link" title="Follow us on Instagram">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a></li>
+            </ul>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu">
+            <a href="index.html" class="mobile-logo">
+                <img src="assets/images/logo.png" alt="JSHARPZ THE BARBER">
+            </a>
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="https://www.instagram.com/jsharpzthebarber/" target="_blank" class="nav-link" title="Follow us on Instagram">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: inline-block; vertical-align: middle; margin-right: 8px;">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.40z"/>
+                </svg>
+                Instagram
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Get In Touch</h1>
+            <p class="hero-subtitle">Tailored Services, Premium Results</p>
+            <p class="hero-description">
+                Ready to experience premium mobile barbering? Contact us today to schedule your personalized grooming session. Professional cuts, luxury products, and unmatched convenience - all delivered to your preferred location.
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Information -->
+                <div class="contact-info">
+                    <h2>Let's Connect</h2>
+                    <p>
+                        Whether you're looking for a regular grooming routine, preparing for a special event, 
+                        or need on-location services, I'm here to deliver the premium experience you deserve. 
+                        Reach out and let's discuss how I can bring professional barbering directly to you.
+                    </p>
+
+                    <div class="contact-item">
+                        <div class="icon">📱</div>
+                        <div class="details">
+                            <h3>Call or Text</h3>
+                            <p>Available for consultations and bookings</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="icon">📧</div>
+                        <div class="details">
+                            <h3>Email</h3>
+                            <p>Quick response for inquiries and scheduling</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="icon">📍</div>
+                        <div class="details">
+                            <h3>Service Area</h3>
+                            <p>NYC & Surrounding Areas - Mobile Service</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="icon">📷</div>
+                        <div class="details">
+                            <h3>Instagram</h3>
+                            <p>@jsharpzthebarber - Latest work & updates</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form">
+                    <h3>Send a Message</h3>
+                    <form action="https://docs.google.com/forms/d/e/1FAIpQLScA8j_YxHWcfF2Ag2B3DUdNsaAotOnsgguEY9mmoBm_A/formResponse" method="POST" target="_blank">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Name *</label>
+                                <input type="text" id="name" name="entry.2005620554" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Phone Number *</label>
+                                <input type="tel" id="phone" name="entry.1045781291" class="form-input" required>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="email" class="form-label">Email *</label>
+                                <input type="email" id="email" name="entry.1166974658" class="form-input" required>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="service" class="form-label">Service Interested In</label>
+                                <select id="service" name="entry.123456789" class="form-input">
+                                    <option value="">Select a service</option>
+                                    <option value="signature-cut">Signature Cut & Style</option>
+                                    <option value="beard-sculpting">Beard Sculpting & Line-up</option>
+                                    <option value="hot-towel-shave">Hot Towel Shave</option>
+                                    <option value="executive-package">Executive Grooming Package</option>
+                                    <option value="event-grooming">Event & Editorial Grooming</option>
+                                    <option value="consultation">Consultation</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="location" class="form-label">Preferred Location</label>
+                                <input type="text" id="location" name="entry.987654321" class="form-input" placeholder="Home, Office, Hotel, etc.">
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea id="message" name="entry.839337160" class="form-textarea" placeholder="Tell us about your grooming needs, preferred timing, or any questions you have..."></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="form-submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Preview -->
+    <section class="services-preview">
+        <div class="container">
+            <h2>Our Services</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <div class="icon">✂️</div>
+                    <h3>Signature Cut & Style</h3>
+                    <p>Precision cuts tailored to your face shape and lifestyle, crafted with expert technique and attention to detail.</p>
+                </div>
+                <div class="service-item">
+                    <div class="icon">🧔</div>
+                    <h3>Beard Sculpting & Line-up</h3>
+                    <p>Professional beard shaping, trimming, and line-ups to complement your overall look and enhance your features.</p>
+                </div>
+                <div class="service-item">
+                    <div class="icon">🔥</div>
+                    <h3>Hot Towel Shave</h3>
+                    <p>Traditional wet shave experience with premium products, hot towels, and meticulous attention to comfort.</p>
+                </div>
+                <div class="service-item">
+                    <div class="icon">💼</div>
+                    <h3>Executive Grooming</h3>
+                    <p>Complete grooming packages designed for professionals who demand excellence and convenience.</p>
+                </div>
+                <div class="service-item">
+                    <div class="icon">📸</div>
+                    <h3>Event & Editorial</h3>
+                    <p>On-location grooming for special events, photoshoots, and occasions where you need to look your absolute best.</p>
+                </div>
+                <div class="service-item">
+                    <div class="icon">🎯</div>
+                    <h3>Custom Consultations</h3>
+                    <p>Personalized consultations to determine the perfect style and grooming routine for your needs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: var(--primary-black); color: white; padding: 3rem 2rem 2rem; text-align: center;">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                <div>
+                    <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--accent-gold);">JSHARPZ THE BARBER</h3>
+                    <p style="color: #ccc; line-height: 1.6;">Premium mobile barbering services delivered to your preferred location across NYC and surrounding areas.</p>
+                </div>
+                <div>
+                    <h4 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem;">Quick Links</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <a href="index.html" style="color: #ccc; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='var(--tangem-blue)'" onmouseout="this.style.color='#ccc'">Home</a>
+                        <a href="about.html" style="color: #ccc; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='var(--tangem-blue)'" onmouseout="this.style.color='#ccc'">About</a>
+                        <a href="contact.html" style="color: #ccc; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='var(--tangem-blue)'" onmouseout="this.style.color='#ccc'">Contact</a>
+                        <a href="https://www.instagram.com/jsharpzthebarber/" target="_blank" style="color: #ccc; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='var(--tangem-blue)'" onmouseout="this.style.color='#ccc'">Instagram</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem;">Services</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <span style="color: #ccc;">Signature Cut & Style</span>
+                        <span style="color: #ccc;">Beard Sculpting</span>
+                        <span style="color: #ccc;">Hot Towel Shave</span>
+                        <span style="color: #ccc;">Executive Grooming</span>
+                    </div>
+                </div>
+            </div>
+            <div style="border-top: 1px solid #333; padding-top: 2rem; display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+                <div style="display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center;">
+                    <a href="terms.html" style="color: #ccc; text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease;" onmouseover="this.style.color='var(--tangem-blue)'" onmouseout="this.style.color='#ccc'">Terms & Conditions</a>
+                    <span style="color: #666;">•</span>
+                    <span style="color: #ccc; font-size: 0.9rem;">Licensed Mobile Barber NYC</span>
+                </div>
+                <p style="color: #666; font-size: 0.9rem;">&copy; 2025 JSHARPZ THE BARBER. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        mobileToggle.addEventListener('click', () => {
+            mobileToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on links or logo
+        document.querySelectorAll('.mobile-menu .nav-link, .mobile-menu .mobile-logo').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.contact-info, .contact-form, .service-item').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // Staggered animation for service items
+        const serviceItems = document.querySelectorAll('.service-item');
+        const serviceObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const index = Array.from(serviceItems).indexOf(entry.target);
+                    setTimeout(() => {
+                        entry.target.classList.add('animate');
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+
+        serviceItems.forEach(item => {
+            serviceObserver.observe(item);
+        });
+    </script>
+</body>
+</html>
