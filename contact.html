@@ -478,6 +478,19 @@
         }
 
         /* Responsive Design */
+        /* Tally Form Responsive Styles */
+        @media (max-width: 768px) {
+            .contact-form iframe {
+                height: 800px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contact-form iframe {
+                height: 900px !important;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-container {
                 padding: 1rem;
@@ -685,9 +698,6 @@
         </div>
     </section>
 
-    <!-- Hidden iframe for Google Forms submission -->
-    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-    
     <!-- Contact Section -->
     <section class="contact-section">
         <div class="container">
@@ -742,7 +752,7 @@
                     <iframe data-tally-src="https://tally.so/embed/wglL0O?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
                             loading="lazy" 
                             width="100%" 
-                            height="600" 
+                            height="700" 
                             frameborder="0" 
                             marginheight="0" 
                             marginwidth="0" 
@@ -897,58 +907,7 @@
             serviceObserver.observe(item);
         });
 
-        // CRITICAL: Debug and handle form submission - keep users on site!
-        console.log('=== FORM DEBUG ===');
-        console.log('Form target:', document.getElementById('contactForm').target);
-        console.log('Iframe exists:', document.querySelector('iframe[name="hidden_iframe"]'));
-        console.log('Form action:', document.getElementById('contactForm').action);
-        
-        // Handle form submission WITHOUT preventing default
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            console.log('Form is submitting to iframe...');
-            
-            // Do NOT prevent default - let it submit to iframe
-            // e.preventDefault(); // DON'T DO THIS!
-            
-            const submitButton = this.querySelector('.form-submit');
-            const originalText = submitButton.textContent;
-            
-            // Show feedback immediately
-            submitButton.textContent = 'Sending...';
-            submitButton.disabled = true;
-            submitButton.style.transition = 'all 0.3s ease';
-            
-            // Log submission
-            console.log('Form submitted to:', this.action);
-            console.log('Target iframe:', this.target);
-            
-            // Wait for submission to complete
-            setTimeout(() => {
-                // Show success message
-                submitButton.textContent = 'Message Sent!';
-                submitButton.style.background = 'linear-gradient(135deg, #4ade80 0%, #22c55e 100%)';
-                console.log('Form submission complete - showing success');
-                
-                // Reset form
-                this.reset();
-                
-                // Reset button after 3 seconds
-                setTimeout(() => {
-                    submitButton.textContent = originalText;
-                    submitButton.disabled = false;
-                    submitButton.style.background = '';
-                    console.log('Button reset to normal state');
-                }, 3000);
-            }, 1500);
-            
-            // Return true to allow submission to iframe
-            return true;
-        });
-        
-        // Listen for iframe load events to confirm submission
-        document.getElementById('hidden_iframe').addEventListener('load', function() {
-            console.log('Hidden iframe loaded - form submission complete!');
-        });
+        // Tally form is handling everything now - no additional JS needed
     </script>
 </body>
 </html>
