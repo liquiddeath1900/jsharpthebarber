@@ -316,6 +316,13 @@
             margin: 0;
         }
 
+        /* Fix icon display */
+        .contact-item .icon svg {
+            width: 24px;
+            height: 24px;
+            display: block;
+        }
+
         /* Contact Form */
         .contact-form {
             background: var(--dark-gray);
@@ -562,13 +569,40 @@
                 text-align: center;
             }
 
+            .contact-info p {
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+
+            .contact-item {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem;
+            }
+
+            .contact-item .icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+
+            .contact-item .details h3 {
+                margin-bottom: 0.5rem;
+            }
+
             .form-grid {
                 grid-template-columns: 1fr;
             }
 
             .contact-form {
                 padding: 2rem 1.5rem;
-                margin: 0 0.5rem;
+                margin: 0;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .contact-form iframe {
+                max-width: 100%;
+                width: 100% !important;
             }
 
             .contact-section,
@@ -607,14 +641,28 @@
                 font-size: 1.8rem;
             }
 
+            .contact-info p {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+
             .contact-form h3 {
                 font-size: 1.5rem;
+                margin-bottom: 1.5rem;
             }
 
             .contact-form {
                 padding: 1.5rem 1rem;
-                margin: 0 0.25rem;
+                margin: 0;
                 border-radius: 15px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .contact-form iframe {
+                min-height: 600px;
+                width: 100% !important;
+                max-width: 100%;
             }
 
             .form-input,
@@ -637,24 +685,33 @@
             }
 
             .contact-item {
-                padding: 1rem;
+                padding: 1.25rem;
                 margin-bottom: 1.5rem;
                 border-radius: 10px;
+                background: var(--dark-gray);
             }
 
             .contact-item .icon {
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
-                margin-right: 1rem;
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+                margin-right: 0;
+                margin-bottom: 0.75rem;
+            }
+
+            .contact-item .icon svg {
+                width: 28px;
+                height: 28px;
             }
 
             .contact-item .details h3 {
-                font-size: 1.1rem;
+                font-size: 1.15rem;
+                margin-bottom: 0.4rem;
             }
 
             .contact-item .details p {
                 font-size: 0.9rem;
+                line-height: 1.5;
             }
 
             .contact-grid {
@@ -663,7 +720,11 @@
 
             .contact-section,
             .services-preview {
-                padding: 40px 1rem;
+                padding: 40px 0.75rem;
+            }
+
+            .container {
+                padding: 0 0.5rem;
             }
         }
     </style>
@@ -734,7 +795,11 @@
                     </p>
 
                     <div class="contact-item">
-                        <div class="icon">💬</div>
+                        <div class="icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+                            </svg>
+                        </div>
                         <div class="details">
                             <h3>Message Us</h3>
                             <p>Fill out the form below for bookings and inquiries - we'll get back to you quickly</p>
