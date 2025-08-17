@@ -737,7 +737,7 @@
                 <!-- Contact Form -->
                 <div class="contact-form">
                     <h3>Send a Message</h3>
-                    <form id="contactForm" action="https://docs.google.com/forms/d/e/1FAIpQLSe84txfzpYUqZlNbK8_9FsiG7ioAodXdThN7kWkxu0TwOjgzg/formResponse" method="POST" target="hidden_iframe" onsubmit="return submitForm();">
+                    <form id="contactForm" action="https://docs.google.com/forms/d/e/1FAIpQLSe84txfzpYUqZlNbK8_9FsiG7ioAodXdThN7kWkxu0TwOjgzg/formResponse" method="POST" target="hidden_iframe">
                         <div class="form-grid">
                             <div class="form-group">
                                 <label for="name" class="form-label">Name *</label>
@@ -922,40 +922,58 @@
             serviceObserver.observe(item);
         });
 
-        // Handle form submission - keep users on site!
-        function submitForm() {
-            // Get the submit button
-            const button = document.querySelector('.form-submit');
-            const originalText = button.textContent;
+        // CRITICAL: Debug and handle form submission - keep users on site!
+        console.log('=== FORM DEBUG ===');
+        console.log('Form target:', document.getElementById('contactForm').target);
+        console.log('Iframe exists:', document.querySelector('iframe[name="hidden_iframe"]'));
+        console.log('Form action:', document.getElementById('contactForm').action);
+        
+        // Handle form submission WITHOUT preventing default
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            console.log('Form is submitting to iframe...');
             
-            // Show sending state
-            button.textContent = 'Sending...';
-            button.disabled = true;
-            button.style.transition = 'all 0.3s ease';
+            // Do NOT prevent default - let it submit to iframe
+            // e.preventDefault(); // DON'T DO THIS!
             
-            // After submission completes (give Google Forms time to process)
+            const submitButton = this.querySelector('.form-submit');
+            const originalText = submitButton.textContent;
+            
+            // Show feedback immediately
+            submitButton.textContent = 'Sending...';
+            submitButton.disabled = true;
+            submitButton.style.transition = 'all 0.3s ease';
+            
+            // Log submission
+            console.log('Form submitted to:', this.action);
+            console.log('Target iframe:', this.target);
+            
+            // Wait for submission to complete
             setTimeout(() => {
-                // Show success state
-                button.textContent = 'Message Sent!';
-                button.style.background = 'linear-gradient(135deg, #4ade80 0%, #22c55e 100%)';
+                // Show success message
+                submitButton.textContent = 'Message Sent!';
+                submitButton.style.background = 'linear-gradient(135deg, #4ade80 0%, #22c55e 100%)';
+                console.log('Form submission complete - showing success');
                 
-                // Reset the form
-                document.getElementById('contactForm').reset();
-                
-                // Show success alert (optional)
-                // alert('Thank you! Your message has been sent successfully.');
+                // Reset form
+                this.reset();
                 
                 // Reset button after 3 seconds
                 setTimeout(() => {
-                    button.textContent = originalText;
-                    button.disabled = false;
-                    button.style.background = '';
+                    submitButton.textContent = originalText;
+                    submitButton.disabled = false;
+                    submitButton.style.background = '';
+                    console.log('Button reset to normal state');
                 }, 3000);
             }, 1500);
             
-            // Allow form submission to iframe
+            // Return true to allow submission to iframe
             return true;
-        }
+        });
+        
+        // Listen for iframe load events to confirm submission
+        document.getElementById('hidden_iframe').addEventListener('load', function() {
+            console.log('Hidden iframe loaded - form submission complete!');
+        });
     </script>
 </body>
 </html>
