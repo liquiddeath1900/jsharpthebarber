@@ -685,6 +685,9 @@
         </div>
     </section>
 
+    <!-- Hidden iframe for Google Forms submission -->
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+    
     <!-- Contact Section -->
     <section class="contact-section">
         <div class="container">
@@ -734,7 +737,7 @@
                 <!-- Contact Form -->
                 <div class="contact-form">
                     <h3>Send a Message</h3>
-                    <form action="https://docs.google.com/forms/d/e/1FAIpQLSe84txfzpYUqZlNbK8_9FsiG7ioAodXdThN7kWkxu0TwOjgzg/formResponse?usp=pp_url&entry.285628554&entry.1855878291&entry.1855846578&entry.1298863382&entry.839337168&entry.1166974658&submit=Submit" method="POST" target="_self" onsubmit="setTimeout(function(){window.location.href='thank-you.html';}, 500);">
+                    <form id="contactForm" action="https://docs.google.com/forms/d/e/1FAIpQLSe84txfzpYUqZlNbK8_9FsiG7ioAodXdThN7kWkxu0TwOjgzg/formResponse" method="POST" target="hidden_iframe" onsubmit="return submitForm();">
                         <div class="form-grid">
                             <div class="form-group">
                                 <label for="name" class="form-label">Name *</label>
@@ -919,14 +922,39 @@
             serviceObserver.observe(item);
         });
 
-        // Simple form submission feedback
-        const form = document.querySelector('form');
-        if (form) {
-            form.addEventListener('submit', function() {
-                const submitButton = this.querySelector('.form-submit');
-                submitButton.textContent = 'Sending...';
-                submitButton.disabled = true;
-            });
+        // Handle form submission - keep users on site!
+        function submitForm() {
+            // Get the submit button
+            const button = document.querySelector('.form-submit');
+            const originalText = button.textContent;
+            
+            // Show sending state
+            button.textContent = 'Sending...';
+            button.disabled = true;
+            button.style.transition = 'all 0.3s ease';
+            
+            // After submission completes (give Google Forms time to process)
+            setTimeout(() => {
+                // Show success state
+                button.textContent = 'Message Sent!';
+                button.style.background = 'linear-gradient(135deg, #4ade80 0%, #22c55e 100%)';
+                
+                // Reset the form
+                document.getElementById('contactForm').reset();
+                
+                // Show success alert (optional)
+                // alert('Thank you! Your message has been sent successfully.');
+                
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                    button.style.background = '';
+                }, 3000);
+            }, 1500);
+            
+            // Allow form submission to iframe
+            return true;
         }
     </script>
 </body>
