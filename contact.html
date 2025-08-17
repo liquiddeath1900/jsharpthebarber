@@ -734,7 +734,7 @@
                 <!-- Contact Form -->
                 <div class="contact-form">
                     <h3>Send a Message</h3>
-                    <form action="https://docs.google.com/forms/d/e/1FAIpQLSe84txfzpYUqZlNbK8_9FsiG7ioAodXdThN7kWkxu0TwOjgzg/formResponse" method="POST" target="_blank">
+                    <form id="contactForm" action="https://docs.google.com/forms/d/e/1FAIpQLSe84txfzpYUqZlNbK8_9FsiG7ioAodXdThN7kWkxu0TwOjgzg/formResponse" method="POST">
                         <div class="form-grid">
                             <div class="form-group">
                                 <label for="name" class="form-label">Name *</label>
@@ -917,6 +917,47 @@
 
         serviceItems.forEach(item => {
             serviceObserver.observe(item);
+        });
+
+        // Handle form submission without redirect
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const submitButton = this.querySelector('.form-submit');
+            const originalText = submitButton.textContent;
+            
+            // Show loading state
+            submitButton.textContent = 'Sending...';
+            submitButton.disabled = true;
+            
+            // Submit to Google Forms
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors'
+            }).then(function() {
+                // Show success message and reset form
+                submitButton.textContent = 'Message Sent!';
+                submitButton.style.background = 'linear-gradient(135deg, #4ade80 0%, #22c55e 100%)';
+                document.getElementById('contactForm').reset();
+                
+                // Reset button after 3 seconds
+                setTimeout(function() {
+                    submitButton.textContent = originalText;
+                    submitButton.style.background = '';
+                    submitButton.disabled = false;
+                }, 3000);
+            }).catch(function() {
+                submitButton.textContent = 'Error - Try Again';
+                submitButton.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
+                
+                setTimeout(function() {
+                    submitButton.textContent = originalText;
+                    submitButton.style.background = '';
+                    submitButton.disabled = false;
+                }, 3000);
+            });
         });
     </script>
 </body>
